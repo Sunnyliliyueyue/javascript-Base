@@ -1,17 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script>
-        function fn() {
-            console.log(a);
-            var a = 1;
-        }
-        fn();
+        // function fn() {
+        //     console.log(a);
+        //     var a = 1;
+        // }
+        // fn();
+
+
+        // function a(b, c) {
+        //     console.log(b);  // func(){}
+        //     var b = 0
+        //     console.log(b);  // 0
+        //     var b = function () {
+        //         console.log('bbbb')
+        //     }
+        //     console.log(c);  //undefined
+        //     console.log(b);  // func(){}
+        // }
+        // a(1)
+
+
+        // const AO = {
+        //     b: undefined, function () {} 0  
+        //     c: undefined,
+        // }
+
+        // const obj = {
+        //     b:9
+        // }
+        // console.log(obj);  
+
+        // obj = null
+
+        // const person = {
+        //     city: 'beijing',
+        //     province: 'beijing'
+        // }
+
+        // function getPerson(p, name, age){
+        //     p.name = name
+        //     p.age = age
+        //     return p
+        // }
+
+        // const p1 = getPerson(person, 'liuyue', 18)
+        // console.log(p1); 
+        // console.log(person);
+        // console.log(p1 === person);
+
+
+
+        //------------------------浅拷贝与深拷贝--------------------------
+
+        // 手写cloneDeep()
+        // function cloneDeep(obj, map = new WeakMap()){
+        //     // 不需要操作的数据类型： 基本数据类型，函数，RegExp, Date
+        //     if(obj === null || typeof obj !== "object" || obj instanceof Date || obj instanceof RegExp){
+        //         return obj
+        //     }
+        //     // 需要递归处理
+        //     // Object
+
+        //     else if(obj instanceof Object){
+        //         const newObject = {}
+        //         map.set(obj, newObject)
+        //         for(let key in obj){
+        //             newObject[key] = cloneDeep(obj[key])
+        //         }
+        //         return newObject
+        //     }
+        //     // Array
+        //     else if(obj instanceof Array){
+        //         const newObject = []
+        //         map.set(obj, newObject)
+        //         obj.forEach(item => {
+        //             newObject.push(cloneDeep(item))
+        //         })
+        //         return newObject
+        //     }
+        //     // Set
+        //     else if(obj instanceof Set){
+        //         const newObject = new Set()
+        //         map.set(obj, newObject)
+        //         for(let i in obj){
+        //             newObject.add(i)
+        //         }
+        //         return newObject
+        //     }
+        //     // Map 
+        //     else if(obj instanceof Map){
+        //         const newObject = new Map()
+        //         map.set(obj, newObject)
+        //         for(let i of obj){
+        //             newObject.set(i)
+        //         }
+        //         return newObject
+        //     }
+        // }
+
     </script>
 </body>
+
 </html>
