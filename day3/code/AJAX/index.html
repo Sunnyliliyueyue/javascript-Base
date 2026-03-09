@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax实现</title>
+</head>
+<body>
+    <script>
+        var xhr = new XMLHttpRequest()
+        // 获取请求方式和地址
+        xhr.open('get', 'http://127.0.0.1:3000/getData')
+        // 发送请求
+        xhr.send()
+        // 获取响应式数据
+        xhr.onload = function(){
+            console.log(xhr.responseText);
+        }
+    </script>
+</body>
+</html>
