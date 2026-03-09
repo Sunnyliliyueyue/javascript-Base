@@ -24,7 +24,7 @@
         //     delete context[fn]  // 删除临时属性obj[sayHi]
         //     return result
         // }
- 
+
         // Function.prototype.myCall = myCall;
         // function sayHi(greet) {
         //     console.log(`${greet}，我是${this.name}`);
@@ -34,32 +34,64 @@
         // const res = sayHi.myCall(obj, '你好');
 
         // apply
-        function myApply(context, argArr) {
-            // 判断myApply是否为函数
+        // function myApply(context, argArr) {
+        //     // 判断myApply是否为函数
+        //     if (typeof this !== 'function') {
+        //         throw new TypeError('被调用对象必须是个函数')
+        //     }
+        //     // 判断传入的对象是否是一个数组
+        //     if(argArr && !Array.isArray(argArr) ){
+        //         throw new TypeError('第二个参数必须是数组')
+        //     }
+        //     // 若没有传如上下文对象，默认为全局对象
+        //     context = context === null ? globalThis : context
+        //     // 用Symbol创建唯一的键名，防止名字冲突
+        //     let fn = Symbol('key')
+        //     context[fn] = this      
+        //     const result = Array.isArray(argArr ) ? context[fn](...argArr) : context[fn]()  
+        //     delete context[fn]  
+        //     return result
+        // }
+
+        // Function.prototype.myApply = myApply
+        // function ILike(...star){
+        //     console.log('我喜欢的明星' + star);
+        // }
+        // var arr = ['黄景瑜', '赵丽颖', '刘烨']
+        // ILike.myApply(window, arr)
+
+        // bind
+        Function.prototype.myBind = function (context, ...args) {
+            // 判断myBind是否为函数
             if (typeof this !== 'function') {
                 throw new TypeError('被调用对象必须是个函数')
             }
-            // 判断传入的对象是否是一个数组
-            if(argArr && !Array.isArray(argArr) ){
-                throw new TypeError('第二个参数必须是数组')
-            }
             // 若没有传如上下文对象，默认为全局对象
             context = context === null ? globalThis : context
-            // 用Symbol创建唯一的键名，防止名字冲突
-            let fn = Symbol('key')
-            context[fn] = this      
-            const result = Array.isArray(argArr ) ? context[fn](...argArr) : context[fn]()  
-            delete context[fn]  
-            return result
+            // 保存原始函数的引用
+            const _this = this
+            return function fn(...innerArgs){
+                // 判断返回的函数是不是构造函数
+                if(this instanceof fn){
+                    return new _this(...args, ...innerArgs)
+                }
+                return _this.apply(context, args.concat(innerArgs))
+            }
         }
 
-        Function.prototype.myApply = myApply
-        function ILike(...star){
-            console.log('我喜欢的明星' + star);
+        var test = {
+            name: 'lili',
+            fn () {
+                console.log(this.name);
+            }
         }
-        var arr = ['黄景瑜', '赵丽颖', '刘烨']
-        ILike.myApply(window, arr)
 
+        const obj = {
+            name: '18'
+        }
+
+        const delayFn = test.fn.myBind(obj)
+        new delayFn(1, 2, 'a')
     </script>
 </body>
 

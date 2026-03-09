@@ -85,8 +85,109 @@
         //  const sayHello = fn.bind(null, 'zhaoliying')
         //  setTimeout(sayHello,1000)
 
+        // 手写 call apply bind
+        // Function.prototype.MyCall = function (context, ...args) {
+        //     // 1.是不是一个函数
+        //     if (typeof this !== 'function') {
+        //         throw new TypeError('被调用的对象必须要是一个函数')
+        //     }
+        //     // 2.有没有传入上下文对象
+        //     context = context === null ? globalThis : context
 
-        
+        //     // 3. 使用symbol创建唯一键名，防止名字冲突
+        //     let fn = Symbol('key')
+        //     context[fn] = this
+        //     const result = context[fn](...args)
+        //     delete context[fn]
+        //     return result
+        // }
+
+        // var test = {
+        //     name: 'allen',
+        //     fn() {
+        //         console.log(this.name)
+        //     },
+        //     add(a, b) {
+        //         return a + b
+        //     }
+        // }
+
+        // const obj = {
+        //     name: '18'
+        // }
+
+        // test.fn.MyCall(obj) // 18
+        // test.fn.call(obj) //18
+
+        // console.log(test.add.MyCall(null, 1, 2))
+        // console.log(test.add.call(null, 1, 2))
+
+        // 手写apply
+        // Function.prototype.MyApply = function (context, argArray) {            
+        //     if (typeof this !== 'function') {
+        //         throw new TypeError('被调用对象必须是个函数')
+        //     }
+        //     if (argArray && !Array.isArray(argArray)) {
+        //         throw new TypeError('传入的必须是数组')
+        //     }
+        //     context = context === null ? globalThis : context
+        //     let fn = Symbol('key')
+        //     context[fn] = this
+        //     const result = Array.isArray(argArray) ? context[fn](...argArray) : context[fn]()
+        //     delete context[fn]
+        //     return result
+        // }
+
+        // var test = {
+        //     name: 'allen',
+        //     fn () {
+        //         console.log(this.name)
+        //     }
+        // }
+
+        // const obj = {
+        //     name: '18'
+        // }
+
+        // test.fn.MyApply(obj)
+        // test.fn.apply(obj)
+
+        // const arr = [2, 3, 6, 5, 1, 7]
+
+        // console.log(Math.max.MyApply(null, arr))
+        // console.log(Math.max.apply(null, arr))
+
+        // bind
+        Function.prototype.MyBind = function (context, ...args) {
+            if (typeof this !== 'function') {
+                throw new TypeError('被调用对象必须是个函数')
+            }
+            context = context === null ? globalThis : context
+            const _this = this
+            return function fn(...innerArgs) {
+                if (this instanceof fn) {
+                    return new _this(...args, ...innerArgs)
+                }
+                return _this.apply(context, args.concat(innerArgs))
+            }
+        }
+        const test = {
+            name: 'allen',
+            hello: function (a, b, c) {
+                console.log(`hello,${this.name}!`, a + b + c)
+            }
+        }
+        const obj = {
+            name: 'world'
+        }
+
+        var h1 = test.hello.MyBind(obj, 1)
+        var h2 = test.hello.bind(obj, 1)
+        h1(2, 3)
+        h2(2, 3)
+
+        console.log(new h1(2, 3))
+        console.log(new h2(2, 3))
     </script>
 
 </body>

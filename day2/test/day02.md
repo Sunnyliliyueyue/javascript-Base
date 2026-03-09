@@ -30,9 +30,9 @@ var getName = function(){ console.log(4); };
 function getName(){ console.log(5) };
 
 Foo.getName();      // 2   
-getName();   // 5     
+getName();   // 4     
 Foo().getName();   // 1     this->window  
-getName();  //  5     
+getName();  //  1     
 new Foo.getName();          //  2
 new Foo().getName();        // 3
 new new Foo().getName();    // 3
