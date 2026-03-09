@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型模式</title>
+</head>
+<body>
+    <script>
+        function Cars1(color, type){
+            this.color = color
+            this.type = type
+        }
+
+        function Cars2(color, type){
+            this.color = color
+            this.type = type
+        }
+
+        Cars2.prototype = Cars1.prototype
+        Cars1.prototype.a = 1
+
+        var car1 = new Cars1('red', 'qirui')
+        var car2 = new Cars2('black', 'hanlanda')
+        console.log(car1, 'car1');
+        console.log(car2, 'car2');
+        
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <script src="http://127.0.0.1:3000/api/getData?cd=callback"></script> -->
+    <script>
+       const script = document.createElement('script')
+       script.src = 'http://127.0.0.1:3000/api/getData?cd=callback'
+       function callback(res){
+        console.log(res, 'res');
+       }
+       document.getElementsByTagName('body')[0].appendChild(script)
+    </script>
+</body>
+</html>

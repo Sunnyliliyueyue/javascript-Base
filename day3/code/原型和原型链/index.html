@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型和原型链</title>
+</head>
+<body>
+    <script>
+        // 对象创建方式
+        // var o1 = {}
+        // var o2 = new Object()
+        // var o3 = Object.create(null)  // 指向新对象的原型
+        // console.log(o1, 'o1')
+        // console.log(o2, 'o2')
+        // console.log(o3, 'o3')
+
+        // var obj = {}
+        // console.log(obj.__proto__ === Object.getPrototypeOf(obj));  // Object.getPrototypeOf(obj)读取原型的目标对象 true
+        // console.log(Object.getPrototypeOf(obj)); // object{}
+        // console.log(obj.__proto__.__proto__); // null
+        
+        
+        // const parent = {
+        //     a: 1,
+        //     fn() {
+        //         console.log('父级的方法')
+        //     }
+        // }
+        // const child = {}
+        // child.__proto__ = parent
+        // console.log(child.a) // 1
+        // child.fn() // 父级的方法
+        
+        
+    </script>
+</body>
+</html>
