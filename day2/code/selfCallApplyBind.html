@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手写call apply bind</title>
+</head>
+
+<body>
+    <script>
+        // call
+        // function myCall(context, ...args) {
+        //     // 判断myCall是否为函数
+        //     if (typeof this !== 'function') {
+        //         throw new TypeError('被调用对象必须是个函数')
+        //     }
+        //     // 若没有传如上下文对象，默认为全局对象
+        //     context = context === null ? globalThis : context
+        //     // 用Symbol创建唯一的键名，防止名字冲突
+        //     let fn = Symbol('key')
+        //     context[fn] = this      // obj[key] = function sayHi
+        //     const result = context[fn](...args)  // 执行sayHi 传入你好
+        //     delete context[fn]  // 删除临时属性obj[sayHi]
+        //     return result
+        // }
+ 
+        // Function.prototype.myCall = myCall;
+        // function sayHi(greet) {
+        //     console.log(`${greet}，我是${this.name}`);
+        //     return '执行完成';
+        // }
+        // const obj = { name: '李四' };
+        // const res = sayHi.myCall(obj, '你好');
+
+        // apply
+        function myApply(context, argArr) {
+            // 判断myApply是否为函数
+            if (typeof this !== 'function') {
+                throw new TypeError('被调用对象必须是个函数')
+            }
+            // 判断传入的对象是否是一个数组
+            if(argArr && !Array.isArray(argArr) ){
+                throw new TypeError('第二个参数必须是数组')
+            }
+            // 若没有传如上下文对象，默认为全局对象
+            context = context === null ? globalThis : context
+            // 用Symbol创建唯一的键名，防止名字冲突
+            let fn = Symbol('key')
+            context[fn] = this      
+            const result = Array.isArray(argArr ) ? context[fn](...argArr) : context[fn]()  
+            delete context[fn]  
+            return result
+        }
+
+        Function.prototype.myApply = myApply
+        function ILike(...star){
+            console.log('我喜欢的明星' + star);
+        }
+        var arr = ['黄景瑜', '赵丽颖', '刘烨']
+        ILike.myApply(window, arr)
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复习</title>
+</head>
+
+<body>
+    <!-- 
+    深拷贝：属性与拷贝的源对象不共享引用，（对象原型不会受到影响）
+    浅拷贝：属性与拷贝的对象共享引用，（对象的原型会更改）
+    -->
+
+    <!-- 手写cloneDeep -->
+    <script>
+        function cloneDeep(obj, map = new WeakMap()) {
+            if (typeof obj !== 'object' || obj === null || typeof obj === 'function' || obj instanceof RegExp || obj instanceof Date) {
+                return obj
+            }
+            else if (obj instanceof Object) {
+                const newObj = {}
+                map.set(obj, newObj)
+                for (let key in obj) {
+                    newObj[key] = cloneDeep(obj[key])
+                }
+                return newObj
+            }
+            else if (obj instanceof Array) {
+                const newObject = []
+                map.set(obj, newObject)
+                obj.forEach(item => {
+                    newObject[item].push = cloneDeep(obj[item])
+                });
+                return newObject
+            }
+            else if (obj instanceof Map) {
+                const newObject = new Map()
+                map.set(obj, newObject)
+                for (let item of obj) {
+                    newObject.set(newObject[item], cloneDeep(obj[item]))
+                }
+                return newObject
+            }
+            else if (obj instanceof Set) {
+                const newObject = new Set()
+                map.set(obj, newObject)
+                for (let item of obj) {
+                    newObject.add(newObject[item], cloneDeep(obj[item]))
+                }
+                return newObject
+            }
+        }
+
+        const obj1 = cloneDeep([1, 2, 3, [3, 2, 1]])
+        const obj2 = cloneDeep({
+            a: 1,
+            b: {
+                b1: 3
+            }
+        })
+
+        console.log(obj1);
+        console.log(obj2);        
+    </script>
+</body>
+
+</html>

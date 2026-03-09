@@ -72,7 +72,7 @@ RegExp,
 
 7.深拷贝与浅拷贝
 浅拷贝是其属性与拷贝源对象的属性共享相同引用，当你更改源或副本时，也可能导致其他对象也发生更改
-深拷贝是指其属性与其拷贝的源对象的属性不共享相同的引用，当你更改源或副本时，可以确保不会导致其他对象也发生更改深拷贝方法：Json.parse(Json.stringify()) 弊端：函数，symbol，RegExp,undefined会造成数据丢失
+深拷贝是指其属性与其拷贝的源对象的属性不共享相同的引用，当你更改源或副本时，可以确保不会导致其他对象也发生更改深拷贝 方法：Json.parse(Json.stringify()) 弊端：函数，symbol，RegExp,undefined会造成数据丢失
         第三方库：Lodash   Lodash.cloneDeep()
 
 ***手撕深拷贝（cloneDeep）****

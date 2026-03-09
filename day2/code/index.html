@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随堂代码</title>
+</head>
+
+<body>
+    <script>
+        // 1.闭包
+        // function books(){
+        //     var a = '有本书'
+        //     return function (){
+        //         console.log(a);     
+        //     }
+        // }
+        // var newBooks = books()
+        // newBooks()
+
+
+        // 2
+        // function goNum(){
+        //     var arr = []
+        //     for(var i=0; i<=10; i++){
+        //         arr[i] = function (){
+        //             return i
+        //         }
+        //     }
+        //     return arr
+        // }
+        // console.log(arr[0]());  // 10
+
+        // 解决2
+        // function goNum(){
+        //     var arr = []
+        //     for(var i=0; i<=10; i++){
+        //         (function(i){
+        //             arr[i] = function(){
+        //                 return i
+        //             }
+        //         })(i)
+        //     }
+        //     return arr
+        // }
+
+        // var arr = goNum()
+        // console.log(arr[0]()); // 0
+
+
+
+        // 2.call
+        // const person1 = {
+        //     fn: function(){
+        //         console.log(this);
+        //     }
+        // }
+        // const person2 = {
+        //     name: 'huangjingyu'
+        // }
+        // person1.fn.call(person2)  // {name: 'person2'}
+
+        // 3.apply
+        // var arr = ['a','b']
+        // var els = [0, 1, 2]
+        // arr.push.apply(arr, els)
+        // console.log(arr);
+
+        // 4.bind
+        // const person1 = {
+        //     name: 'liuye',
+        //     fn: function(){
+        //         console.log(this.name)
+        //     }
+        // }
+        // const fn = person1.fn
+        // fn()     // window
+        // const fn = person1.fn.bind(person1)
+        // fn()
+
+        //  function fn(name){
+        //     console.log('hello' + name);
+        //  }
+        //  const sayHello = fn.bind(null, 'zhaoliying')
+        //  setTimeout(sayHello,1000)
+
+
+        
+    </script>
+
+</body>
+
+</html>
