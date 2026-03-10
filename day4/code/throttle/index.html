@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+    .parent {
+        /* 规定的列数，设置5列 */
+        column-count: 5;
+        /* 规定的间隔距离 */
+        column-gap: 0;
+    }
+
+    .item {
+        /* 不允许插入任何中断 */
+        break-inside: avoid-page;
+
+        box-sizing: border-box;
+        padding: 10px;
+        width: 100%;
+    }
+
+    .item__content_big {
+        height: 400px;
+        background: red;
+    }
+
+    .item__content_medium {
+        height: 300px;
+        background: blue;
+    }
+
+    .item__content_small {
+        height: 250px;
+        background: green;
+    }
+
+    @media (max-width: 1024px) {
+        .parent {
+            column-count: 4;
+        }
+    }
+
+    @media (max-width: 860px) {
+        .parent {
+            column-count: 3;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .parent {
+            column-count: 2;
+        }
+    }
+</style>
+
+<body>
+    <div id="parent" class="parent">
+        <div class="item">
+            <div class="item__content_big"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_small"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_medium"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_big"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_small"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_medium"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_big"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_small"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_medium"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_big"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_small"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_medium"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_big"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_small"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_medium"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_big"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_small"> </div>
+        </div>
+        <div class="item">
+            <div class="item__content_medium"> </div>
+        </div>
+    </div>
+    <script src="./jquery.js"></script>
+    <script>
+
+        function throttle(func, wite) {
+            var timer = null
+            return function () {
+                var context = this
+                var args = arguments
+                if (!timer) {
+                    timer = setTimeout(function () {
+                        func.apply(context, args)
+                        timer = null
+                    }, wite)
+                }
+            }
+
+        }
+        var throttleFn = throttle(function () {
+            console.log('节流函数触发')
+            $('#parent').append(`<div class="item">
+                <div class="item__content_big"> </div>
+            </div>
+            <div class="item">
+                <div class="item__content_small"> </div>
+            </div>
+            <div class="item">
+                <div class="item__content_medium"> </div>
+            </div>
+            <div class="item">
+                <div class="item__content_big"> </div>
+            </div>
+            <div class="item">
+                <div class="item__content_small"> </div>
+            </div>
+            <div class="item">
+                <div class="item__content_medium"> </div>
+            </div>`)
+        }, 1000)
+
+        window.onscroll = throttleFn
+    </script>
+</body>
+
+</html>

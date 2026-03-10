@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <style>
+        .box {
+            border-radius: 15px;
+            background-clip: padding-box;
+            margin: 180px auto;
+            width: 350px;
+            padding: 35px 35px 15px 35px;
+            background-color: #fff;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 0 25px #cac6c6;
+        }
+
+        .box label {
+            display: inline-block;
+            width: 60px;
+        }
+
+        .box input {
+            width: 260px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 5px;
+            border: 1px solid #b4bccc;
+            padding-left: 10px;
+            outline: none;
+        }
+
+        .box .group {
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .btn {
+            width: 70px;
+            height: 40px;
+            border: none;
+            background-color: #409EFF;
+            line-height: 16px;
+            text-align: center;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .btn-box {
+            text-align: center;
+        }
+
+        #message {
+            margin-left: 60px;
+            color: red;
+            font-size: 13px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h3>注册窗口</h3>
+        <div class="group">
+            <label>用户名</label>
+            <input id="userName" placeholder="用户名" />
+            <p id="message"></p>
+        </div>
+        <div class="group">
+            <label>密码</label>
+            <input id="userName" type="password" placeholder="用户名" />
+        </div>
+        <div class="btn-box">
+            <button id="btn">登录</button>
+        </div>
+    </div>
+    <script src="https://unpkg.com/axios@0.25.0/dist/axios.min.js"></script>
+    <script>
+        const userName = document.getElementById('userName')
+        const message = document.getElementById('message')
+        // http://www.winweb.cloud/mall/demo/checkUser?name=
+        function debounce(func, wait) {
+            var timer = null
+            return function () {
+                if (timer !== null) {
+                    clearTimeout(timer)
+                }
+                timer = setTimeout(func, wait)
+            }
+        }
+
+        function debounceFn() {
+            debounce(function () {
+                axios.get('http://www.winweb.cloud/mall/demo/checkUser?name=' + userName.value).then(function (res) {
+                    // console.log(res)
+                    var result = res.data
+                    if (result.code !== 10000) {
+                        message.innerHTML = result.message
+                    }
+                })
+            }, 10000)
+        }
+        userName.addEventListener('input', function () {
+            var str = checkUserName(userName.value)
+            if (str === '该用户名合法') {
+                message.innerHTML = ''
+
+            } else {
+                message.innerHTML = str
+            }
+        })
+        function checkUserName(value) {
+            var message = "该用户名合法";
+            if ("" == value) {
+                message = "用户名为空";
+                return message;
+            }
+            else if ((value.length < 5) || (value.length > 20)) {
+                message = "用户名必须为5 ~ 20位";
+                return message;
+            }
+            else if (check_other_char(value)) {
+                message = "不能含有特殊字符";
+                return message;
+            }
+            return message;
+        }
+        function check_other_char(str) {
+            var arr = ["&", "\\", "/", "*", ">", "<", "@", "!"];
+            for (var i = 0; i < arr.length; i++) {
+                for (var j = 0; j < str.length; j++) {
+                    if (arr[i] == str.charAt(j)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+    </script>
+</body>
+
+</html>

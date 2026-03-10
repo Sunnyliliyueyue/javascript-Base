@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 原型链继承   
+        // function Parent() {
+        //     this.name = 'parent'
+        // }
+        // Parent.prototype.sayName = function () {
+        //     console.log(this.name)
+        // }
+        // function Child() {
+        // }
+        // Child.prototype = new Parent()
+        // Child.constructor = Child
+        // const child1 = new Child()
+        // child1.sayName() // parent
+
+        // function Parent() {
+        //     this.name = ['parent']
+        // }
+        // Parent.prototype.sayName = function () {
+        //     console.log(this.name)
+        // }
+        // function Child() {
+        // }
+        // Child.prototype = new Parent()
+        // Child.constructor = Child
+        // const child1 = new Child()
+        // child1.name[0] = 'child1'
+        // child1.sayName() // ['child1']
+
+        // 构造函数的继承
+        // function Parent(name) {
+        //     this.name = name
+        // }
+        // Parent.prototype.sayName = function () {
+        //     console.log(this.name)
+        // }
+        // function Child() {
+        //     Parent.call(this, 'child')
+        // }
+        // var child1 = new Child()
+        // console.log(child1);
+        // child1.sayName()  // 报错
+
+        // 组合式继承
+        function Parent(name) {
+            this.name = name
+        }
+        Parent.prototype.sayName = function () {
+            console.log(this.name)
+        }
+        Child.prototype = new Parent()
+        Child.prototype.constructor = Child
+
+        function Child(name) {
+            Parent.call(this, name)
+        }
+        var child1 = new Child('光刻车队')
+        var child2 = new Child('中速天梯')
+        child2.name = '天梯'
+        console.log(child1.name);
+        child1.sayName() // 光刻车队
+        console.log(child2.name);
+        child2.sayName() // 天梯
+
+        // 寄生组合式继承
+        function Parent(name) {
+            this.name = name
+        }
+        Parent.prototype.sayName = function () {
+            console.log(this.name)
+        }
+        Child.prototype = Object.create(Parent.prototype)
+        Child.prototype.constructor = Child
+
+        function Child(name) {
+            Parent.call(this, name)
+        }
+        var child1 = new Child('光刻车队')
+        var child2 = new Child('中速天梯')
+        child2.name = '天梯'
+        console.log(child1.name);
+        child1.sayName() // 光刻车队
+        console.log(child2.name);
+        child2.sayName() // 天梯
+    </script>
+</body>
+
+</html>
