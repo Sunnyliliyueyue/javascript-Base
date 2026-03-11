@@ -32,9 +32,11 @@ function throttle(func, wait, immediate = false) {
             return
         }
         if(timer) return
+        let context = this
+        let args = arguments
         timer = setInterval(function(){
-            func()
-            clearInterval(timer)
+            func.apply(context, args)
+            timer = null
         }, wait)
     }
 }
