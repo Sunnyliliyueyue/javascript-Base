@@ -99,10 +99,9 @@ function throttle(func, wite, immediate = false){
             return
         }
         if(timer) return
-        let context = this
         let args = arguments
         timer = setInterval(()=>{
-            func.apply(context, args)
+            func(arguments)            
             timer = null
         }, wite)
     }
