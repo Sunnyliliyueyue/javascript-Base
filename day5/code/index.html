@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 数组结构赋值
+        // let arr = [
+        //     [name, 'zhangsan'],
+        //     [age, 18]
+        // ]
+        // arr.forEach(([key, value]) => {
+        //     console.log(key, value) 
+        // })
+
+        // 对象的解构赋值
+        // let { name, age } = { name: 'zhangsan', age: 18 }
+        // console.log(name, age)
+        // let { foo: bar } = { foo: '123' }
+        // console.log(bar) // 123
+        // console.log(foo); // 报错 真正被赋值的是后者不是前者
+
+        // // 嵌套解构赋值
+        // let obj = {
+        //     p: [
+        //         'Hello',
+        //         { y: 'World' }
+        //     ]
+        // };
+        // let { p: [x, { y }] } = obj;
+        // console.log(x, y);  // hello world
+
+        // var { x = 3 } = {}; x // 3
+        // var { x, y = 5 } = { x: 1 }; x  // 1
+        // var { x: y = 3 } = {}; y  // 3
+        // var { x: y = 3 } = { x: 5 }; y // 5
+        // var { message: msg = 'Something went wrong' } = {};
+        // msg //Something went wrong
+        // // 默认值生效的条件是，对象的属性值严格等于undefined。
+        // var { x = 3 } = { x: undefined };
+        // var { x = 3 } = { x: null };
+        // x // null
+
+        // // 提取JSON内容
+        // let jsonData = {
+        //     id: 42,
+        //     status: "OK",
+        //     data: [867, 5309]
+        // };
+
+        // let { id, status, data: number } = jsonData;
+        // console.log(id, status, number);  // 42 OK [867, 5309]
+
+        // Symbol
+        // let a = Symbol(1)
+        // let b = Symbol(1)
+        // let c = {}
+        // c[a] = 3
+        // c[b] = 4
+        // console.log(c[a]); // 3
+        // console.log(c[b]); // 4
+
+        // 有参数的情况
+        // let s1 = Symbol('foo');
+        // let s2 = Symbol('foo');
+        // s1 === s2 // false
+
+        // let obj = { a: 2, b: 3 }
+        // let obj1 = { a: 3, b: 4 }
+        // let s = Symbol(obj);
+        // let s1 = Symbol(obj1);
+        // let o = {}
+        // o[s] = 1;
+        // o[s1] = 2;
+        // console.log(o);
+
+        // const obj = {};
+        // let a = Symbol('a');
+        // let b = Symbol('b');
+        // obj[a] = 'Hello';
+        // obj[b] = 'World';
+        // const objectSymbols = Object.getOwnPropertySymbols(obj);
+        // console.log(objectSymbols); // [Symbol(a), Symbol(b)]
+
+
+        // let private = Symbol('private')
+        // var obj = {
+        //     _name: '张三',
+        //     [private]: '私有的属性',
+        //     say: function () {
+        //         console.log(this[private])
+        //     }
+        // }
+
+        // console.log(Object.keys(obj)) // ['_name', 'say']
+
+        // Set
+        // const set = new Set([1, 2, 3, 4, 5, 5])
+        // // let arr = [...set]
+        // console.log( Array.from(set) );  // 转化成数组
+
+
+        // 交集
+        // const arr1 = [1, 2, 3]
+        // const arr2 = [2, 3, 4]
+        // const set1 = new Symbol(arr2)
+        // const result = new Set(arr1.filter(item => set1.has(item)))
+        // console.log( Array.from(result) );  // [2, 3]
+
+        // 并集
+        // const union = new Set([...arr1, ...arr2])
+        // console.log(Array.from(union) );  // [1, 2, 3, 4]
+
+        // 差集
+        // const diff = new Set(arr1.filter(item=>!set1.has(item)))
+
+        // var obj1 = {}
+        // var obj2 = {}
+        // var obj = {}
+        // obj[obj1] = 1
+        // obj[obj2] = 2
+        // 是因为对象的属性名只能是字符串，当使用对象作为属性名时，会调用对象的toString方法，将对象转化成字符串
+        // 所以obj1和obj2的属性名都是[object Object] 
+        // 所以obj[obj1]和obj[obj2]是同一个属性
+        // 后者覆盖了前者
+        // console.log(obj); // {[object Object]: 2}
+
+
+        // 对象没有作用域
+        // 不看调用位置，只看定义位置
+        var name = 'window'
+        var obj = {
+            name: 'obj',
+            methods: () => {
+                console.log(this.name)
+            },
+            fn: function (cb) {
+                cb()
+            }
+        }
+        obj.fn1 = function () {
+            obj.fn(() => { console.log(this.name) })
+        }
+        var fn1 = obj.fn1
+        obj.methods()
+        obj.fn(() => { console.log(this.name) })
+        fn1()
+        obj.fn1()
+
+    </script>
+</body>
+
+</html>
