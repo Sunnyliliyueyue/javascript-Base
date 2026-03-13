@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+</head>
+
+<body>
+    <script>
+        // Promise 实现两个数相加后返回的结果时隔一秒后 与第三个数再次相加
+        // function add(a, b, wait){
+        //    return new Promise((resolve, reject)=>{
+        //         setTimeout(()=>{
+        //             resolve(a+b)
+        //         }, wait)
+        //     })
+        // }
+
+        // add(2, 3, 1000).then(res=>{
+        //     console.log(res)
+        //     return add(res, 4, 1000)
+        // }).then(res=>{
+        //     console.log(res)
+        // })
+        // 面试题： 请分析执行顺序
+        function fn() {
+            return new Promise((resolve) => {
+                console.log('Promise1')
+                fn1()
+                setTimeout(() => {
+                    console.log('Promise2')
+                    resolve()
+                    console.log('Promise3')
+                }, 0);
+            })
+        }
+        async function fn1() {
+            var p = Promise.resolve().then(() => {
+                console.log('Promise6')
+            })
+            await p.then(() => {
+                console.log('Promise7')
+            })
+            console.log('end')
+        }
+        console.log('script')
+        setTimeout(() => {
+            console.log('setTimeout')
+        }, 0)
+        fn().then(() => {
+            console.log('Promise4')
+        })
+    </script>
+</body>
+
+</html>

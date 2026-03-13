@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手写Promise</title>
+</head>
+
+<body>
+    <script>
+        class MyPromise {
+            constructor(callback) {
+                // 初始化状态为等待
+                this.status = 'pending'
+                // 创建一个成功时的参数
+                this.value = undefined
+                // 创建一个失败时的参数
+                this.reason = undefined
+                // 创建成功时的回调函数队列
+                this.OnFulfilledCallbacks = []
+                // 创建失败时的回调函数队列
+                this.OnRejectedCallbacks = []
+
+                // 成功时
+                const resolve = (value) => {
+                    if (this.status == 'pending') {
+                        this.status = 'fulfilled'
+                        this.value = value
+                        this.OnFulfilledCallbacks.forEach(cb => cb())
+                    }
+                }
+                // 失败时
+                const reject = (reason) => {
+                    if (this.status == 'pending') {
+                        this.status = 'rejected'
+                        this.reason = reason
+                        this.OnRejectedCallbacks.forEach(cb => cb())
+                    }
+                }
+                // 执行回调函数
+                callback(resolve, reject)
+            }
+            then(OnFulfilled, OnRejected) {
+                return new MyPromise((resolve, reject) => {
+                    const newOnFulfilled = typeof OnFulfilled === 'function' ? OnFulfilled : true
+                    const newOnRejected = typeof OnRejected === 'function' ? OnRejected : true
+                    if (newOnFulfilled && newOnRejected) {
+                        // 成功时
+                        if (this.status == 'fulfilled') {
+                            resolve(OnFulfilled(this.value))
+                        }
+                        // 失败时
+                        if (this.status == 'rejected') {
+                            try {
+                                if (!OnRejected) {
+                                    reject(OnFulfilled(this.reason))
+                                } else {
+                                    reject(OnRejected(this.reason))
+                                }
+                            } catch (err) {
+                                console.log(err);
+                            }
+                        }
+                        // 等待时
+                        if (this.status == 'pending') {
+                            this.OnFulfilledCallbacks.push(() => {
+                                resolve(OnFulfilled(this.value))
+                            })
+                            this.OnRejectedCallbacks.push(() => {
+                                try {
+                                    if (!OnRejected) {
+                                        reject(OnFulfilled(this.reason))
+                                    } else {
+                                        reject(OnRejected(this.reason))
+                                    }
+                                } catch (err) {
+                                    console.log(err);
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+            static resolve(value) {
+                return new MyPromise((resolve, reject) => {
+                    resolve(value)
+                })
+            }
+            static reject(reason) {
+                return new MyPromise((resolve, reject) => {
+                    reject(reason)
+                })
+            }
+            static all(promise){
+                return new MyPromise((resolve, reject) => {
+                    const result = []
+                    let count = 0
+                    promise.forEach((item, index) => {
+                        item.then((val)=>{
+                            result[index] = val
+                            count++
+                            if(count == promise.length){
+                                resolve(result)
+                            }
+                        })
+                    })
+                })
+            }
+        }
+
+        const p = new MyPromise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(100)
+            }, 1000)
+        })
+        p.then((val) => {
+            console.log(val)
+        }).then(() => {
+            console.log('then2')
+        })
+    </script>
+</body>
+
+</html>
